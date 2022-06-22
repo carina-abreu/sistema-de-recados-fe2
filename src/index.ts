@@ -1,22 +1,27 @@
-const form: any = document.querySelector("#formLogin");
+const formLogin = document.querySelector("#formLogin") as HTMLInputElement;
 
-form.addEventListener("submit", (event) => {
-  event.preventDefault();
+const inputLogin = document.getElementById("login") as HTMLInputElement;
+const inputSenha = document.getElementById("senha") as HTMLInputElement;
 
-  const usuariosSalvos: any = JSON.parse(localStorage.getItem("users") || "[]");
+function logar(e: Event) {
+  e.preventDefault();
 
-  const login: any = form.login.value;
-  const senha: any = form.senha.value;
+  const users = JSON.parse(localStorage.getItem("users") || "[]");
 
-  const usuarioEncontrado: any = usuariosSalvos.find(
-    (usuario) => usuario.username === login && usuario.password === senha
+  const usuarioEncontrado = users.find(
+    (usuario: any) =>
+      usuario.username === inputLogin.value &&
+      usuario.password === inputSenha.value
   );
 
-  if (!usuarioEncontrado) {
+  if (usuarioEncontrado === undefined) {
     alert("Usuário ou senha inválida");
     return;
   }
-  let usuarioLogado: any = form.login.value;
-  localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+
+  let usuariologado = inputLogin.value;
+  localStorage.setItem("usuariologado", JSON.stringify(usuariologado));
   location.href = "./painelDeRecados.html";
-});
+}
+
+formLogin.addEventListener("submit", logar);

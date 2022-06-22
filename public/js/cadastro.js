@@ -1,35 +1,24 @@
 "use strict";
-const inputLogin = document.getElementById("login");
-const inputSenha = document.getElementById("senha");
+const formCadastro = document.querySelector("#formCadastro");
+const inputCadLogin = document.getElementById("cadLogin");
+const inputCadSenha = document.getElementById("cadSenha");
 const inputConfSenha = document.getElementById("confSenha");
-const cadastrarButton = document.getElementById("cadastrarButton");
-function cadastrarUser() {
-    if (!verificarSenhas(inputSenha.value, inputConfSenha.value)) {
-        return alert("As senhas digitadas são diferentes, revise!");
+formCadastro.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const usuariosSalvos = JSON.parse(localStorage.getItem("users") || "[]");
+    const usuarioJaExiste = usuariosSalvos.some((usuario) => usuario.username === inputCadLogin.value);
+    if (usuarioJaExiste) {
+        alert("Usuário já cadastrado");
+        return;
     }
-    const newUser = {
-        login: inputLogin.value,
-        senha: inputSenha.value,
-    };
-    const users = JSON.parse(localStorage.getItem("users")) || [];
-    if (users.findIndex((user) => user.login === newUser.login) !== -1) {
-        return alert("Usuário já cadastrado");
+    if (inputCadSenha.value !== inputConfSenha.value) {
+        return alert("Alerta: senhas diferentes digitadas");
     }
-    users.push(newUser);
-    localStorage.setItem("users", JSON.stringify(users));
-    limparForm();
+    usuariosSalvos.push({
+        username: inputCadLogin.value,
+        password: inputCadSenha.value,
+    });
+    localStorage.setItem("users", JSON.stringify(usuariosSalvos));
     alert("Usuário cadastrado com sucesso, faça seu login!");
     location.href = "./index.html";
-    return;
-}
-function verificarSenhas(senha, confSenha) {
-    if (senha === confSenha) {
-        return true;
-    }
-    return false;
-}
-function limparForm() {
-    inputLogin.value = "";
-    inputSenha.value = "";
-    inputConfSenha.value = "";
-}
+});

@@ -1,5 +1,5 @@
-const usuarioLogado: any = JSON.parse(
-  localStorage.getItem("usuarioLogado") || ""
+const usuariologado: any = JSON.parse(
+  localStorage.getItem("usuariologado") || "[]"
 );
 
 const form: any = document.querySelector("#formNovoRecado");
@@ -10,13 +10,13 @@ let indiceEdicao: any = 0;
 
 const recuperarLocalStorage = () => {
   const listaDeRecados = JSON.parse(
-    localStorage.getItem(usuarioLogado) || "[]"
+    localStorage.getItem(usuariologado) || "[]"
   );
   return listaDeRecados;
 };
 
 const atualizarLocalStorage = (listaDeRecados) => {
-  localStorage.setItem(usuarioLogado, JSON.stringify(listaDeRecados));
+  localStorage.setItem(usuariologado, JSON.stringify(listaDeRecados));
 };
 
 const salvarRecado = (event) => {

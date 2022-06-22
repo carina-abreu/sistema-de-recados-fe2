@@ -1,15 +1,15 @@
 "use strict";
-const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "");
+const usuariologado = JSON.parse(localStorage.getItem("usuariologado") || "[]");
 const form = document.querySelector("#formNovoRecado");
 const corpoTabela = document.querySelector("#tbody");
 let estamosEditando = false;
 let indiceEdicao = 0;
 const recuperarLocalStorage = () => {
-    const listaDeRecados = JSON.parse(localStorage.getItem(usuarioLogado) || "[]");
+    const listaDeRecados = JSON.parse(localStorage.getItem(usuariologado) || "[]");
     return listaDeRecados;
 };
 const atualizarLocalStorage = (listaDeRecados) => {
-    localStorage.setItem(usuarioLogado, JSON.stringify(listaDeRecados));
+    localStorage.setItem(usuariologado, JSON.stringify(listaDeRecados));
 };
 const salvarRecado = (event) => {
     event.preventDefault();

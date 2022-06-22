@@ -1,16 +1,18 @@
 "use strict";
-const form = document.querySelector("#formLogin");
-form.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const usuariosSalvos = JSON.parse(localStorage.getItem("users") || "[]");
-    const login = form.login.value;
-    const senha = form.senha.value;
-    const usuarioEncontrado = usuariosSalvos.find((usuario) => usuario.username === login && usuario.password === senha);
-    if (!usuarioEncontrado) {
+const formLogin = document.querySelector("#formLogin");
+const inputLogin = document.getElementById("login");
+const inputSenha = document.getElementById("senha");
+function logar(e) {
+    e.preventDefault();
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    const usuarioEncontrado = users.find((usuario) => usuario.username === inputLogin.value &&
+        usuario.password === inputSenha.value);
+    if (usuarioEncontrado === undefined) {
         alert("Usuário ou senha inválida");
         return;
     }
-    let usuarioLogado = form.login.value;
-    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioLogado));
+    let usuariologado = inputLogin.value;
+    localStorage.setItem("usuariologado", JSON.stringify(usuariologado));
     location.href = "./painelDeRecados.html";
-});
+}
+formLogin.addEventListener("submit", logar);
